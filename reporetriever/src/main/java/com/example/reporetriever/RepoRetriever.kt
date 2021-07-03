@@ -1,25 +1,47 @@
 package com.example.reporetriever
 
-import com.example.reporetriever.api.SearchRepoApi
+import com.example.reporetriever.api.GithubApi
 import com.example.reporetriever.api.SearchRepoResponse
-import retrofit2.Callback
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RepoRetriever {
-    private val api: SearchRepoApi
+    private val api: GithubApi
 
+    /**
+     * Setup dependencies.
+     * TODO: Check if manual dependency injection can be used, rather than instantiating here.
+     */
     init {
-        // It would be better to inject retrofit than instantiating it here
+        // Interceptor to log request and response
+        val httpLogger = HttpLoggingInterceptor()
+        httpLogger.level = HttpLoggingInterceptor.Level.BODY
+
+        val okHttpClient =
+            OkHttpClient.Builder()
+                .addInterceptor(httpLogger)
+                .build()
+
+        // HTTP Client
         val retrofit: Retrofit =
             Retrofit.Builder()
-                .baseUrl(SearchRepoApi.BASE_URL)
+                .baseUrl(GithubApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build()
-        api = retrofit.create(SearchRepoApi::class.java)
+
+        // Search API
+        api = retrofit.create(GithubApi::class.java)
     }
 
-    suspend fun getRepositories(mobilePlatform: String, organization: String): SearchRepoResponse {
-        return api.searchRepos()
+    /**
+     *
+     */
+    suspend fun getRepositories(platform: String, org: String): SearchRepoResponse {
+        // TODO: Error handling
+        val query = "${platform}+org:${org}"
+        return api.searchRepos(query)
     }
 }

@@ -1,9 +1,9 @@
 package com.example.reporetriever.api
 
-import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
-interface SearchRepoApi {
+interface GithubApi {
 
     /* https://api.github.com/search/repositories?q=android+org:rakutentech */
 
@@ -11,7 +11,6 @@ interface SearchRepoApi {
         const val BASE_URL = "https://api.github.com/"
     }
 
-    // TODO: Pass q and org parameters
-    @GET("search/repositories?q=android+org:rakutentech")
-    suspend fun searchRepos(): SearchRepoResponse
+    @GET("search/repositories")
+    suspend fun searchRepos(@Query("q", encoded = true) query: String): SearchRepoResponse
 }

@@ -2,8 +2,7 @@ package com.example.reporetriever
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -16,8 +15,8 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: Check if there is internet?
         repoRetriever = RepoRetriever()
-        GlobalScope.launch(Dispatchers.IO) {
-            val response = repoRetriever.getRepositories("", "")
+        lifecycleScope.launch {
+            val response = repoRetriever.getRepositories("android", "rakutentech")
             response.items.forEach {
                 println(it.toString())
             }
