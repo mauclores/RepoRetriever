@@ -2,13 +2,15 @@ package com.example.reporetriever
 
 import com.example.reporetriever.api.GithubApi
 import com.example.reporetriever.api.SearchRepoResponse
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 
 class RepoRetriever {
-    private val api: GithubApi
+    private var api: GithubApi
 
     /**
      * Setup dependencies.
@@ -39,9 +41,13 @@ class RepoRetriever {
     /**
      *
      */
-    suspend fun getRepositories(platform: String, org: String): SearchRepoResponse {
-        // TODO: Error handling
-        val query = "${platform}+org:${org}"
-        return api.searchRepos(query)
+    fun getRepos(platform: String, org: String): SearchRepoResponse? {
+        val response = runBlocking {
+            api.searchRepos("${platform}+org:${org}")
+        }
+        if (!response.isSuccessful) {
+            throw IOException("Something went wrong: $response")
+        }
+        return response.body()
     }
 }

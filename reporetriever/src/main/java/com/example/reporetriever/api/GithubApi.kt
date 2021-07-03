@@ -1,5 +1,6 @@
 package com.example.reporetriever.api
 
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,5 +13,5 @@ interface GithubApi {
     }
 
     @GET("search/repositories")
-    suspend fun searchRepos(@Query("q", encoded = true) query: String): SearchRepoResponse
+    suspend fun searchRepos(@Query("q", encoded = true) query: String): Response<SearchRepoResponse?>
 }
