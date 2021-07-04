@@ -35,6 +35,7 @@ class RepoRetriever(repoApi: GithubApi) {
         response.forEach {
             Log.d("Response", it.toString())
         }
+
         return response
     }
 }
