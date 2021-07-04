@@ -1,8 +1,9 @@
 package com.example.reporetriever
 
+import android.util.Log
 import com.example.reporetriever.api.ApiProvider
 import com.example.reporetriever.api.GithubApi
-import com.example.reporetriever.data.SearchRepoResponse
+import com.example.reporetriever.data.Item
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
@@ -20,17 +21,24 @@ class RepoRetriever(repoApi: GithubApi) {
      * @param platform The mobile platform such as ios or android
      * @param org The name of organization
      *
-     * @return List of repository information
+     * @return List of items
      *
      * @exception IOException Error while accessing the network
      */
-    fun getRepos(platform: String, org: String): SearchRepoResponse {
-        val response = runBlocking {
+    fun getRepos(platform: String, org: String): List<Item> {
+        val request = runBlocking {
             api.searchRepos("${platform}+org:${org}")
         }
-        if (!response.isSuccessful) {
-            throw IOException("Something went wrong: $response")
+
+        if (!request.isSuccessful) {
+            throw IOException("Something went wrong: $request")
         }
-        return response.body() ?: SearchRepoResponse()
+
+        val response = request.body()?.items ?: emptyList()
+        response.forEach {
+            Log.d("Response", it.toString())
+        }
+
+        return response
     }
 }

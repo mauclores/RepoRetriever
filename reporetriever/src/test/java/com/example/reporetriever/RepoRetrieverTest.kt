@@ -48,16 +48,16 @@ class RepoRetrieverTest {
         }
         val response = testRepoRetriever.getRepos("android", "rakutentech")
 
-        assertEquals(2, response.items.size)
+        assertEquals(2, response.size)
 
-        val item1 = response.items[0]
+        val item1 = response[0]
         assertEquals("android-buildconfig", item1.name)
         assertEquals(false, item1.private)
         assertEquals("Shared (gradle) build configurations for Android and Java libraries",
             item1.description)
         assertEquals("Groovy", item1.language)
 
-        val item2 = response.items[1]
+        val item2 = response[1]
         assertEquals("android-perftracking", item2.name)
         assertEquals(false, item2.private)
         assertEquals("Performance Tracking for Android Apps", item2.description)
@@ -72,7 +72,7 @@ class RepoRetrieverTest {
         }
         val response = testRepoRetriever.getRepos("testplatform", "testorg")
 
-        assertTrue(response.items.isEmpty())
+        assertTrue(response.isEmpty())
     }
 
     @Test

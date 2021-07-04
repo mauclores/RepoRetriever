@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRepositories() {
-        repoRetriever.getRepos("android","rakutentech")?.items?.forEach {
-            Log.d(TAG, it.toString())
-        }
+        repoRetriever.getRepos("android","rakutentech")
     }
 }
