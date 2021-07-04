@@ -6,11 +6,24 @@ import com.example.reporetriever.data.SearchRepoResponse
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
+/**
+ * Class exposing methods to access repository information search
+ */
 class RepoRetriever(repoApi: GithubApi) {
     private var api: GithubApi = repoApi
 
     constructor(): this(ApiProvider.createApi(GithubApi::class.java))
 
+    /**
+     * Gets a list of repository information for an organization for a given platform.
+     *
+     * @param platform The mobile platform such as ios or android
+     * @param org The name of organization
+     *
+     * @return List of repository information
+     *
+     * @exception IOException Error while accessing the network
+     */
     fun getRepos(platform: String, org: String): SearchRepoResponse {
         val response = runBlocking {
             api.searchRepos("${platform}+org:${org}")

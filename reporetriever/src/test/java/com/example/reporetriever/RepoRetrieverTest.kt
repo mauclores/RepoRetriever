@@ -76,7 +76,7 @@ class RepoRetrieverTest {
     }
 
     @Test
-    fun testFailReturn() {
+    fun testReturnFail() {
         server.apply {
             enqueue(MockResponse().setResponseCode(404))
         }

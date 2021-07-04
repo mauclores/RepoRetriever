@@ -5,6 +5,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Singleton class to access repository APIs
+ */
 object ApiProvider {
 
     private val retrofit: Retrofit =
@@ -14,6 +17,11 @@ object ApiProvider {
             .client(getHttpClient())
             .build()
 
+    /**
+     * Customized HTTP Client that can display HTTP logs.
+     *
+     * @return OKHTTPClient
+     */
     private fun getHttpClient(): OkHttpClient {
         val httpLogger = HttpLoggingInterceptor()
         httpLogger.level = HttpLoggingInterceptor.Level.BODY
