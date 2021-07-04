@@ -2,11 +2,10 @@ package com.example.reporetriever
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-
-    private val TAG = "MainActivity"
     private lateinit var repoRetriever: RepoRetriever
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +16,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRepositories() {
-        repoRetriever.getRepos("android","rakutentech")
+        lifecycleScope.launch {
+            repoRetriever.getRepos("android","rakutentech")
+            // Do something with the result here
+        }
     }
 }

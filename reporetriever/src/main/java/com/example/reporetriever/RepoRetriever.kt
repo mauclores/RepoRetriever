@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.reporetriever.api.ApiProvider
 import com.example.reporetriever.api.GithubApi
 import com.example.reporetriever.data.Item
-import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
 /**
@@ -25,10 +24,8 @@ class RepoRetriever(repoApi: GithubApi) {
      *
      * @exception IOException Error while accessing the network
      */
-    fun getRepos(platform: String, org: String): List<Item> {
-        val request = runBlocking {
-            api.searchRepos("${platform}+org:${org}")
-        }
+    suspend fun getRepos(platform: String, org: String): List<Item> {
+        val request = api.searchRepos("${platform}+org:${org}")
 
         if (!request.isSuccessful) {
             throw IOException("Something went wrong: $request")
@@ -38,7 +35,6 @@ class RepoRetriever(repoApi: GithubApi) {
         response.forEach {
             Log.d("Response", it.toString())
         }
-
         return response
     }
 }

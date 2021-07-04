@@ -1,6 +1,7 @@
 package com.example.reporetriever
 
 import com.example.reporetriever.api.GithubApi
+import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -46,7 +47,10 @@ class RepoRetrieverTest {
             enqueue(MockResponse().setBody(
                 MockResponseFileReader("githubapi_with_items.json").content))
         }
-        val response = testRepoRetriever.getRepos("android", "rakutentech")
+
+        val response = runBlocking {
+            testRepoRetriever.getRepos("android", "rakutentech")
+        }
 
         assertEquals(2, response.size)
 
@@ -70,7 +74,10 @@ class RepoRetrieverTest {
             enqueue(MockResponse().setBody(
                 MockResponseFileReader("githubapi_empty_items.json").content))
         }
-        val response = testRepoRetriever.getRepos("testplatform", "testorg")
+
+        val response = runBlocking {
+            testRepoRetriever.getRepos("testplatform", "testorg")
+        }
 
         assertTrue(response.isEmpty())
     }
@@ -81,7 +88,9 @@ class RepoRetrieverTest {
             enqueue(MockResponse().setResponseCode(404))
         }
         assertFailsWith<IOException> {
-            testRepoRetriever.getRepos("ios", "rakutentech")
+            runBlocking {
+                testRepoRetriever.getRepos("ios", "rakutentech")
+            }
         }
     }
 }
