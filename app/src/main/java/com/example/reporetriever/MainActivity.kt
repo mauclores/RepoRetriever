@@ -17,13 +17,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRepositories() {
-        try {
-            val response = repoRetriever.getRepos("android", "rakutentech")
-            response?.items?.forEach {
-                Log.d(TAG, it.toString())
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Exception: $e")
+        repoRetriever.getRepos("android","rakutentech")?.items?.forEach {
+            Log.d(TAG, it.toString())
         }
     }
 }

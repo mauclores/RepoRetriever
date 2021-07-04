@@ -1,0 +1,20 @@
+{
+  "total_count": 2,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 106378138,
+      "name": "android-buildconfig",
+      "private": false,
+      "description": "Shared (gradle) build configurations for Android and Java libraries",
+      "language": "Groovy"
+    },
+    {
+      "id": 108369600,
+      "name": "android-perftracking",
+      "private": false,
+      "description": "Performance Tracking for Android Apps",
+      "language": "Java"
+    }
+  ]
+}
