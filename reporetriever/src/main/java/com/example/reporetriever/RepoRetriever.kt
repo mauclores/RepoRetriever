@@ -9,7 +9,7 @@ import java.io.IOException
 /**
  * Class exposing methods to access repository information search
  */
-class RepoRetriever(repoApi: GithubApi) {
+class RepoRetriever internal constructor(repoApi: GithubApi) {
     private var api: GithubApi = repoApi
 
     constructor(): this(ApiProvider.createApi(GithubApi::class.java))
@@ -33,7 +33,7 @@ class RepoRetriever(repoApi: GithubApi) {
 
         val response = request.body()?.items ?: emptyList()
         response.forEach {
-            Log.d("Response", it.toString())
+            Log.d("RepoRetriever", it.toString())
         }
 
         return response

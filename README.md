@@ -1,6 +1,10 @@
 # RepoRetriever
 
-Library that returns a list of GitHub Repository information given a platform and organization
+Library that returns a list of GitHub Repository information given a platform and organization.
+
+# Environment
+
+  - Android studio v4.2
 
 ## Using in your project
 
@@ -22,7 +26,7 @@ Library that returns a list of GitHub Repository information given a platform an
 ## Testing
 
 1. A sample app is available to call the library, however UI is not provided.
-   Check the output logs via Android Studio.
+   Check the output logs via Android Studio. Filter by `reporetriever` string.
 1. Unit Tests can also be run. See `RepoRetrieverTest`.
 
 ## Libraries Used

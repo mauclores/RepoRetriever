@@ -83,6 +83,20 @@ class RepoRetrieverTest {
     }
 
     @Test
+    fun testReturnNonExistentItems() {
+        server.apply {
+            enqueue(MockResponse().setBody(
+                MockResponseFileReader("githubapi_invalid_query.json").content))
+        }
+
+        val response = runBlocking {
+            testRepoRetriever.getRepos("and", "rakut")
+        }
+
+        assertTrue(response.isEmpty())
+    }
+
+    @Test
     fun testReturnFail() {
         server.apply {
             enqueue(MockResponse().setResponseCode(404))
